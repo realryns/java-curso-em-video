@@ -5,43 +5,84 @@ package aula05;
  * @author RYNS
  */
 public class Conta {
-    int numConta;
+    
+    public int numConta;
     protected String tipo;
     private String dono;
-    private float saldo;
+    private double saldo;
     private boolean status;
     
     //Métodos personalizados
+    
+    public void estadoAtual() {
+        System.out.println("----------------------");
+        System.out.println("Conta: " + this.getNumConta());
+        System.out.println("Tipo: " + this.getTipo());
+        System.out.println("Dono: " + this.getDono());
+        System.out.println("Saldo: " + this.getSaldo());
+        System.out.println("Status: " + this.getStatus());
+    }
+    
     public void abrirConta(String t){
-        this.setTipo(t);
         this.setStatus(true);
-    } 
+        this.setTipo(t);
+        if (t == "CC"){
+            this.setSaldo(50);
+        } else if (t == "CP"){
+            this.setSaldo(150);
+        }
+        System.out.println("Conta de " + this.getDono() + " aberta com sucesso!");    
+    }
     
     public void fecharConta(){
-        
-    } 
-    
-    public void depositar(){
-        
+        if (this.getSaldo() < 0) {
+            System.out.println("Não foi possível fechar a sua conta. Conta em débito.");           
+        } else if (this.getSaldo() > 0){
+            System.out.println("Não foi possível fechar a sua conta. Conta com dinheiro.");
+        } else {
+            this.setStatus(false);
+            System.out.println("Conta de " + this.getDono() + " fechada com sucesso.");
+        }
     }
     
-    public void sacar(){
+    public void depositar(double v){
+        if (this.getStatus() == false) {
+            System.out.println("Impossível depositar. Conta desativada.");
+        } else {
+            this.setSaldo(this.getSaldo() + v);
+            System.out.println("Depósisto realizado na conta de " + this.getDono() + ".");
+        }
+    }
+    
+    public void sacar(double v){
+        if (this.getStatus() == false){
+            System.out.println("Impossível sacar. Conta desativada.");
+        } else if (this.getSaldo() < v){
+            System.out.println("Impossível sacar. Saldo insuficiente.");
+        } else {
+            this.setSaldo(this.getSaldo() - v);
+            System.out.println("Saque realizado na conta de " + this.getDono() + ".");
+            
+        }
+    }
+    
+    public void pagarMensal(double v){
+        if (this.getTipo() == "CC")  {
+            v = 12;
+        } else if (this.getTipo() == "CP") {
+            v = 20;
+        }
         
+        if (this.status == false){
+            System.out.println("Impossível pagar mensalidade. Conta desativada.");
+        } else if (this.saldo < v){
+            System.out.println("Impossível pagar mensalidade. Conta desativada.");
+        } else {
+            this.setSaldo(this.getSaldo() - v);
+        }
     }
-    
-    public void pagarMensal(){
-    
-    }
-    
-    
     
     //Métodos especiais
-    
-    //Método construtor
-    public Conta(){
-        this.setStatus(true);
-        this.setSaldo(0);
-    }
     
     public void setNumConta(int numConta){
         this.numConta = numConta;
@@ -51,38 +92,44 @@ public class Conta {
         return this.numConta;
     }
     
-    public void setTipo(String tipo) {
+    public void setTipo(String tipo){
         this.tipo = tipo;
     }
     
     public String getTipo(){
         return this.tipo;
     }
-
-    public String getDono() {
-        return dono;
-    }
-
-    public void setDono(String dono) {
+    
+    public void setDono(String dono){
         this.dono = dono;
     }
-
-    public float getSaldo() {
-        return saldo;
+    
+    public String getDono(){
+        return this.dono;
     }
-
-    public void setSaldo(float saldo) {
+    
+    public void setSaldo(double saldo){
         this.saldo = saldo;
     }
-
-    public boolean isStatus() {
-        return status;
+    
+    public double getSaldo(){
+        return this.saldo;
     }
-
-    public void setStatus(boolean status) {
+    
+    public void setStatus(boolean status){
         this.status = status;
     }
     
+    public boolean getStatus(){
+        return this.status;
+    }
+    
+    //Método Construtor
+    
+    public Conta(){
+        this.setSaldo(0);
+        this.setStatus(false);
+    } 
     
     
 }

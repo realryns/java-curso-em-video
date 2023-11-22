@@ -15,7 +15,7 @@ public class Aula04 {
        
         c1.status();
         */
-        Caneta c2 = new Caneta("Faber Castell", 0.5f, "Vermelha", false);
+        Caneta c2 = new Caneta("Rua Amazonas,294", 0.5f, "123.456.789-00", false);
         
         c2.status();
     }
